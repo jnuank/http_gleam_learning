@@ -10,3 +10,4 @@ pub fn my_service(_request: Request(t)) -> Response(BytesBuilder) {
   |> response.prepend_header("made-with", "Gleam")
   |> response.set_body(body)
 }
+
