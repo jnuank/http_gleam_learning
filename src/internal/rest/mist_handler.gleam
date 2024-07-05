@@ -18,6 +18,8 @@ pub fn handler(req: Request(Connection)) -> Response(ResponseData) {
 		response.new(404)
 		|> response.set_body(mist.Bytes(bytes_builder.new()))
 
+
+	io.debug(request.path_segments(req))
 	case request.path_segments(req) {
 		["ws"] -> 
 			mist.websocket(
@@ -27,10 +29,23 @@ pub fn handler(req: Request(Connection)) -> Response(ResponseData) {
 				handler: handle_ws_message
 			)
 		["echo"] -> echo_body(req)
-		_ -> not_found
+		_ -> echo_req(req)
 	}
 
 }
+
+fn echo_req(request: Request(Connection)) -> Response(ResponseData) {
+
+	mist.read_body(request, 1024 * 1024 * 10)
+	|> result.map(fn(req) {
+		response.new(200)
+		|> response.set_body(mist.Bytes(bytes_builder.from_string(req.path)))
+	})
+	|> result.lazy_unwrap(fn() {
+		response.new(400)
+		|> response.set_body(mist.Bytes(bytes_builder.new()))
+	})
+} 
 
 fn echo_body(request: Request(Connection)) -> Response(ResponseData) {
 	let content_type = 
