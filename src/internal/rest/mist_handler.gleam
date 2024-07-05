@@ -19,7 +19,11 @@ pub fn handler(req: Request(Connection)) -> Response(ResponseData) {
 		|> response.set_body(mist.Bytes(bytes_builder.new()))
 
 
-	io.debug(request.path_segments(req))
+	req
+	|> io.debug
+	|> request.path_segments
+	|> io.debug
+
 	case request.path_segments(req) {
 		["ws"] -> 
 			mist.websocket(
