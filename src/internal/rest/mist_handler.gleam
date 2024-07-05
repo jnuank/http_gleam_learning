@@ -2,6 +2,7 @@ import gleam/erlang/process
 import gleam/otp/actor
 import gleam/option.{None, Some}
 import gleam/io
+import gleam/result
 
 import gleam/http/request.{type Request}
 import gleam/http/response.{type Response}
@@ -25,9 +26,28 @@ pub fn handler(req: Request(Connection)) -> Response(ResponseData) {
 				on_close: fn(_state) { io.println("goodbye!")},
 				handler: handle_ws_message
 			)
+		["echo"] -> echo_body(req)
 		_ -> not_found
 	}
 
+}
+
+fn echo_body(request: Request(Connection)) -> Response(ResponseData) {
+	let content_type = 
+		request
+		|> request.get_header("content-type")
+		|> result.unwrap("text/plain")
+	
+	mist.read_body(request, 1024 * 1024 * 10)
+	|> result.map(fn(req) {
+		response.new(200)
+		|> response.set_body(mist.Bytes(bytes_builder.from_bit_array(req.body)))
+		|> response.set_header("content-type", content_type)
+	})
+	|> result.lazy_unwrap(fn() {
+		response.new(400)
+		|> response.set_body(mist.Bytes(bytes_builder.new()))
+	})
 }
 
 pub type MyMessage { 
