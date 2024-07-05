@@ -3,6 +3,7 @@ import gleam/otp/actor
 import gleam/option.{None, Some}
 import gleam/io
 import gleam/result
+import gleam/iterator
 
 import gleam/http/request.{type Request}
 import gleam/http/response.{type Response}
@@ -33,9 +34,23 @@ pub fn handler(req: Request(Connection)) -> Response(ResponseData) {
 				handler: handle_ws_message
 			)
 		["echo"] -> echo_body(req)
+		["chunk"] -> serve_chunk(req)
 		_ -> echo_req(req)
 	}
 
+}
+
+fn serve_chunk(_request: Request(Connection)) -> Response(ResponseData) {
+
+	let iter = 
+		["one", "two", "three"]
+		|> iterator.from_list
+		|> iterator.map(bytes_builder.from_string)
+		|> io.debug
+
+	response.new(200)
+	|> response.set_body(mist.Chunked(iter))
+	|> response.set_header("content-type", "text/plain")
 }
 
 fn echo_req(request: Request(Connection)) -> Response(ResponseData) {
