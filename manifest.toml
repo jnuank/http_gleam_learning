@@ -15,15 +15,18 @@ packages = [
   { name = "gramps", version = "2.0.3", build_tools = ["gleam"], requirements = ["gleam_crypto", "gleam_erlang", "gleam_http", "gleam_stdlib"], otp_app = "gramps", source = "hex", outer_checksum = "3CCAA6E081225180D95C79679D383BBF51C8D1FDC1B84DA1DA444F628C373793" },
   { name = "hpack_erl", version = "0.3.0", build_tools = ["rebar3"], requirements = [], otp_app = "hpack", source = "hex", outer_checksum = "D6137D7079169D8C485C6962DFE261AF5B9EF60FBC557344511C1E65E3D95FB0" },
   { name = "logging", version = "1.2.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "logging", source = "hex", outer_checksum = "FCB111401BDB4703A440A94FF8CC7DA521112269C065F219C2766998333E7738" },
+  { name = "meck", version = "0.9.2", build_tools = ["rebar3"], requirements = [], otp_app = "meck", source = "hex", outer_checksum = "81344F561357DC40A8344AFA53767C32669153355B626EA9FCBC8DA6B3045826" },
   { name = "mist", version = "1.2.0", build_tools = ["gleam"], requirements = ["birl", "gleam_erlang", "gleam_http", "gleam_otp", "gleam_stdlib", "glisten", "gramps", "hpack_erl", "logging"], otp_app = "mist", source = "hex", outer_checksum = "109B4D64E68C104CC23BB3CC5441ECD479DD7444889DA01113B75C6AF0F0E17B" },
+  { name = "mockth", version = "0.4.0", build_tools = ["gleam"], requirements = ["gleam_erlang", "gleam_stdlib", "gleeunit", "meck"], otp_app = "mockth", source = "hex", outer_checksum = "5C74302233E587E6E5AAF6D4E6943B37C2C7CB2FC2220AB4263999F7FECD0FA3" },
   { name = "ranger", version = "1.2.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "ranger", source = "hex", outer_checksum = "1566C272B1D141B3BBA38B25CB761EF56E312E79EC0E2DFD4D3C19FB0CC1F98C" },
 ]
 
 [requirements]
 gleam_elli = { version = ">= 2.4.0 and < 3.0.0" }
-gleam_erlang = { version = ">= 0.25.0 and < 1.0.0"}
+gleam_erlang = { version = ">= 0.25.0 and < 1.0.0" }
 gleam_http = { version = ">= 3.6.0 and < 4.0.0" }
-gleam_otp = { version = ">= 0.10.0 and < 1.0.0"}
+gleam_otp = { version = ">= 0.10.0 and < 1.0.0" }
 gleam_stdlib = { version = ">= 0.34.0 and < 2.0.0" }
 gleeunit = { version = ">= 1.0.0 and < 2.0.0" }
 mist = { version = ">= 1.2.0 and < 2.0.0" }
+mockth = { version = ">= 0.4.0 and < 1.0.0"}
